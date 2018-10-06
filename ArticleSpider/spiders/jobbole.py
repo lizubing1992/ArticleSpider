@@ -30,15 +30,14 @@ class JobboleSpider(scrapy.Spider):
         # 提取下一页交给request下载
         next_url = response.css(".next.page-numbers::attr(href)").extract_first("")
         if next_url:
-            yield Request(url=parse.urljoin(response.url, post_url), callback=self.parse)
+            yield Request(url=next_url, callback=self.parse)
 
     def parse_detail(self, response):
         article_item = JobBoleArticleItem()
         # 文章封面图
         # front_image_url = response.meta.get("front_image_url", "")
         # re_selector = response.xpath("//*[@id='post-114397']/div[1]/h1/text()").extract_first("")
-        # create_date = response.xpath("//p[@class='entry-meta-hide-on-mobile']/text()").extract()[0].strip().replace("·",
-        #                                                                                                             "")
+        # create_date = response.xpath("//p[@class='entry-meta-hide-on-mobile']/text()").extract()[0].strip().replace("·","")
         # title = response.css(".entry-header h1::text").extract()[0]
         # praise_nums = response.xpath("//span[contains(@class,'vote-post-up')]/h10/text()").extract()[0]
         # fav_nums = response.xpath("//span[contains(@class,'bookmark-btn')]/text()").extract()[0]
@@ -86,6 +85,7 @@ class JobboleSpider(scrapy.Spider):
         item_loader.add_value("url_object_id", get_md5(response.url))
         item_loader.add_css("create_date", "p.entry-meta-hide-on-mobile::text")
         item_loader.add_value("front_image_url", [front_image_url])
+        item_loader.add_value("front_image_path", [front_image_url])
         item_loader.add_css("praise_nums", ".vote-post-up h10::text")
         item_loader.add_css("comment_nums", "a[href='#article-comment'] span::text")
         item_loader.add_css("fav_nums", ".bookmark-btn::text")
