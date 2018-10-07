@@ -67,7 +67,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
+    # 'ArticleSpider.pipelines.ArticlespiderPipeline': 300,
     # 图片下载pipeline
     # 'scrapy.pipelines.images.ImagesPipeline' : 1,
     # 写入接json文件
@@ -75,9 +75,9 @@ ITEM_PIPELINES = {
     # scrapy 写入接json文件
     # 'ArticleSpider.pipelines.JsonExporterPipeline': 3,
     # 数据库
-    'ArticleSpider.pipelines.MysqlPipeline': 4,
+    # 'ArticleSpider.pipelines.MysqlPipeline': 4,
     # twist 异步操作
-    'ArticleSpider.pipelines.MysqlTwistedPipeline': 5,
+    'ArticleSpider.pipelines.MysqlTwistedPipeline': 1,
 }
 # 图片下载的属性字段
 IMAGES_URLS_FIELD = "front_image_url"
@@ -90,7 +90,7 @@ IMAGES_MIN_WIDTH = 100
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
-# AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 # AUTOTHROTTLE_START_DELAY = 5
 # The maximum download delay to be set in case of high latencies
@@ -110,6 +110,10 @@ IMAGES_MIN_WIDTH = 100
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 MYSQL_HOST = "127.0.0.0"
-MYSQL_DBNAME = "article"
+MYSQL_DBNAME = "article_spider"
 MYSQL_USER = "root"
 MYSQL_PASSWORD = 'root'
+
+SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+SQL_DATE_FORMAT = "%Y-%m-%d"
+

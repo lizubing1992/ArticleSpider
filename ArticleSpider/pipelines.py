@@ -44,19 +44,22 @@ class MysqlTwistedPipeline(object):
         query.addErrback(self.handle_error)
 
     # 处理异步数据插入异常
-    def handle_error(self, failure, item, spider):
+    def handle_error(self, failure):
         print(failure)
 
     def do_insert(self, cursor, item):
+        # 根据不同的item 构建不同的sql语句并插入到mysql中
+        insert_sql, params = item.get_insert_sql()
+        cursor.execute(insert_sql, params)
         # 执行插入逻辑
-        insert_sql = """
-                   insert into article(title, url, url_object_id, create_date, fav_nums, front_image_url, front_image_path, praise_nums, comment_nums,tags,content)
-                   VALUE (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-               """
-        cursor.execute(insert_sql, (
-            item["title"], item["url"], item["url_object_id"], item["create_date"], item["fav_nums"],
-            item["front_image_url"], item["front_image_path"], item["praise_nums"], item["comment_nums"], item["tags"],
-            item["content"]))
+        # insert_sql = """
+        #            insert into article(title, url, url_object_id, create_date, fav_nums, front_image_url, front_image_path, praise_nums, comment_nums,tags,content)
+        #            VALUE (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        #        """
+        # cursor.execute(insert_sql, (
+        #     item["title"], item["url"], item["url_object_id"], item["create_date"], item["fav_nums"],
+        #     item["front_image_url"], item["front_image_path"], item["praise_nums"], item["comment_nums"], item["tags"],
+        #     item["content"]))
 
 
 class MysqlPipeline(object):

@@ -9,4 +9,7 @@ import os
 
 # 获取main文件的父目录
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-execute(["scrapy","crawl","jobbole"])
+# 伯乐在线 爬取
+# execute(["scrapy","crawl","jobbole"])
+# 拉勾爬取
+execute(["scrapy", "crawl", "lagou"])
