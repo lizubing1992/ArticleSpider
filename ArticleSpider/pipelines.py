@@ -31,8 +31,8 @@ class MysqlTwistedPipeline(object):
             db=settings["MYSQL_DBNAME"],
             user=settings["MYSQL_USER"],
             password=settings["MYSQL_PASSWORD"],
-            charset='uft-8',
-            cursorclass=MySQLdb.cursors,
+            charset='utf8',
+            cursorclass=MySQLdb.cursors.DictCursor,
             use_unicode=True,
         )
         dbpool = adbapi.ConnectionPool("MySQLdb", **dbparams)

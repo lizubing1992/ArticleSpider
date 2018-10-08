@@ -109,7 +109,7 @@ AUTOTHROTTLE_ENABLED = True
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_HOST = "127.0.0.0"
+MYSQL_HOST = "127.0.0.1"
 MYSQL_DBNAME = "article_spider"
 MYSQL_USER = "root"
 MYSQL_PASSWORD = 'root'
