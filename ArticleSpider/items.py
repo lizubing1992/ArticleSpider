@@ -84,6 +84,40 @@ class JobBoleArticleItem(scrapy.Item):
     content = scrapy.Field()
 
 
+class GrfyItemLoader(ItemLoader):
+    # 自定义itemloader
+    default_output_processor = TakeFirst()
+
+
+class GrfyItem(scrapy.Item):
+    city = scrapy.Field()
+    village_name = scrapy.Field()
+    room_num = scrapy.Field()
+    landlord_phone = scrapy.Field()
+    landlord_name = scrapy.Field()
+    bedroom_num = scrapy.Field()
+    living_room_num = scrapy.Field()
+    toilet_num = scrapy.Field()
+    room_area = scrapy.Field()
+    mark = scrapy.Field()
+    create_date = scrapy.Field()
+
+
+    def get_insert_sql(self):
+        insert_sql = """
+               insert into rent_house(city, village_name, room_num, landlord_phone, landlord_name,
+                bedroom_num, living_room_num,toilet_num, room_area, mark, create_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+               ON DUPLICATE KEY UPDATE city=VALUES(city), mark=VALUES(mark)
+           """
+        params = (
+            self["city"], self["village_name"], self["room_num"], self["landlord_phone"], self["landlord_name"],
+            self["bedroom_num"], self["living_room_num"], self["toilet_num"],
+            self["room_area"], self["mark"],  self["create_date"].strftime(SQL_DATETIME_FORMAT),
+        )
+
+        return insert_sql, params
+
+
 # -----------------------拉勾网数据----------------------------------
 
 class LagouItemLoader(ItemLoader):
@@ -122,7 +156,7 @@ class LagouJobItem(scrapy.Item):
     job_advantage = scrapy.Field()
     job_desc = scrapy.Field()
     job_addr = scrapy.Field(
-        input_processor=MapCompose(remove_tags,handle_jobaddr)
+        input_processor=MapCompose(remove_tags, handle_jobaddr)
     )
     company_name = scrapy.Field()
     company_url = scrapy.Field()
