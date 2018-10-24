@@ -57,6 +57,13 @@ def remove_comment_tags(value):
         return value
 
 
+def is_empty_show_default(value):
+    if value.strip() == "":
+        return "没有查到"
+    else:
+        return value
+
+
 class JobBoleArticleItem(scrapy.Item):
     title = scrapy.Field()
     create_date = scrapy.Field(
@@ -93,7 +100,9 @@ class GrfyItem(scrapy.Item):
     city = scrapy.Field()
     village_name = scrapy.Field()
     room_num = scrapy.Field()
-    landlord_phone = scrapy.Field()
+    landlord_phone = scrapy.Field(
+        output_processor=MapCompose(is_empty_show_default)
+    )
     landlord_name = scrapy.Field()
     bedroom_num = scrapy.Field()
     living_room_num = scrapy.Field()
@@ -102,17 +111,18 @@ class GrfyItem(scrapy.Item):
     mark = scrapy.Field()
     create_date = scrapy.Field()
 
-
     def get_insert_sql(self):
+        if self["landlord_phone"] is None:
+            self["landlord_phone"] = "暂无数据"
+
         insert_sql = """
                insert into rent_house(city, village_name, room_num, landlord_phone, landlord_name,
                 bedroom_num, living_room_num,toilet_num, room_area, mark, create_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-               ON DUPLICATE KEY UPDATE city=VALUES(city), mark=VALUES(mark)
            """
         params = (
             self["city"], self["village_name"], self["room_num"], self["landlord_phone"], self["landlord_name"],
             self["bedroom_num"], self["living_room_num"], self["toilet_num"],
-            self["room_area"], self["mark"],  self["create_date"].strftime(SQL_DATETIME_FORMAT),
+            self["room_area"], self["mark"], self["create_date"].strftime(SQL_DATETIME_FORMAT),
         )
 
         return insert_sql, params

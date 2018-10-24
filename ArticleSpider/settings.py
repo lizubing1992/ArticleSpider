@@ -54,9 +54,11 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    'ArticleSpider.middlewares.RandomUserAgentMiddleware': 1,
+    'ArticleSpider.middlewares.PhantomJSMiddleware': 2,
+    'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -109,11 +111,10 @@ AUTOTHROTTLE_ENABLED = True
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_HOST = "139.159.188.212"
-MYSQL_DBNAME = "spider"
+MYSQL_HOST = "127.0.0.1"
+MYSQL_DBNAME = "article_spider"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = '@Lzb5989148'
+MYSQL_PASSWORD = 'root'
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
-

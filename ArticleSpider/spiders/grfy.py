@@ -15,7 +15,7 @@ class GrfySpider(CrawlSpider):
     headers = {
         "HOST": "sh.grfy.net",
         "Referer": "http://sh.grfy.net/",
-        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36"
+        'User-Agent': "MMozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9) Gecko/20080705 Firefox/3.0 Kapiko/3.0"
     }
 
     rules = (
@@ -32,7 +32,11 @@ class GrfySpider(CrawlSpider):
         item_loader.add_xpath("city", "//*[@class='cr_left']/dl[4]/dd/text()")
         item_loader.add_xpath("village_name", "//*[@class='cr_left']/dl[3]/dd/text()")
         item_loader.add_xpath("room_num", "//*[@class='cr_left']/dl[4]/dd/text()")
-        item_loader.add_css("landlord_phone", ".redtelphone::text")
+
+        landlord_phone = response.css(".redtelphone::text").TakeFirst()
+        if len(landlord_phone):
+            landlord_phone = ["暂无数据"]
+        item_loader.add_value("landlord_phone", landlord_phone)
         item_loader.add_xpath("landlord_name", "//*[@class='cr_left']/dl[7]/dd/text()")
         item_loader.add_xpath("bedroom_num", "//*[@class='cr_left']/dl[2]/dd/text()")
         item_loader.add_xpath("living_room_num", "//*[@class='cr_left']/dl[2]/dd/text()")
