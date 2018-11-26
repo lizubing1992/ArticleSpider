@@ -64,6 +64,30 @@ def is_empty_show_default(value):
         return value
 
 
+class SohuItem(scrapy.Item):
+    title = scrapy.Field()
+    url = scrapy.Field()
+    url_object_id = scrapy.Field()
+    article_type = scrapy.Field()
+    author_name = scrapy.Field()
+    publish_time = scrapy.Field()
+    content = scrapy.Field()
+    crawl_time = scrapy.Field()
+
+    def get_insert_sql(self):
+        insert_sql = """
+            insert into sohu_article(title, url, url_object_id, article_type, author_name, 
+             publish_time, content,crawl_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE title=VALUES(title), author_name=VALUES(author_name)
+        """
+        params = (
+            self["title"], self["url"], self["url_object_id"], self["article_type"], self["author_name"],
+            self["publish_time"], self["content"], self["crawl_time"].strftime(SQL_DATETIME_FORMAT),
+        )
+
+        return insert_sql, params
+
+
 class JobBoleArticleItem(scrapy.Item):
     title = scrapy.Field()
     create_date = scrapy.Field(
