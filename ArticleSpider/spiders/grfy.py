@@ -19,7 +19,7 @@ class GrfySpider(CrawlSpider):
     }
 
     rules = (
-        Rule(LinkExtractor(allow="rent/d-.*"), process_request='request_tagPage', callback='parse_item', follow=True),
+        Rule(LinkExtractor(allow="rent/d-.*"), callback='parse_item', follow=True),
     )
 
     def request_tagPage(self, request):
@@ -33,7 +33,7 @@ class GrfySpider(CrawlSpider):
         item_loader.add_xpath("village_name", "//*[@class='cr_left']/dl[3]/dd/text()")
         item_loader.add_xpath("room_num", "//*[@class='cr_left']/dl[4]/dd/text()")
 
-        landlord_phone = response.css(".redtelphone::text").TakeFirst()
+        landlord_phone = response.css(".redtelphone::text").extract_first("")
         if len(landlord_phone):
             landlord_phone = ["暂无数据"]
         item_loader.add_value("landlord_phone", landlord_phone)

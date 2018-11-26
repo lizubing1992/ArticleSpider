@@ -55,9 +55,9 @@ ROBOTSTXT_OBEY = True
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'ArticleSpider.middlewares.RandomUserAgentMiddleware': 1,
+    # 'ArticleSpider.middlewares.RandomUserAgentMiddleware': 1,
     'ArticleSpider.middlewares.PhantomJSMiddleware': 2,
-    'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
+    # 'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
 }
 
 # Enable or disable extensions

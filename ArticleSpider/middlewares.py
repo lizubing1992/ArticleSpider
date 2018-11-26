@@ -140,7 +140,7 @@ class RandomUserAgentMiddleware(object):
 class PhantomJSMiddleware(object):
     @classmethod
     def process_request(cls, request, spider):
-        driver = webdriver.PhantomJS(executable_path='E:/phantomjs-2.1.1-windows/bin/phantomjs.exe')
+        driver = webdriver.PhantomJS(executable_path='D:/phantomjs-2.1.1-windows/bin/phantomjs.exe')
         driver.get(request.url)
         content = driver.page_source.encode('utf-8')
         time.sleep(3)  # 等待JS执行
