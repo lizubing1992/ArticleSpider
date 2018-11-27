@@ -5,6 +5,8 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 import time
+import logging
+import random
 
 from fake_useragent import UserAgent
 from scrapy import signals
@@ -146,3 +148,20 @@ class PhantomJSMiddleware(object):
         time.sleep(3)  # 等待JS执行
         driver.quit()
         return HtmlResponse(request.url, encoding='utf-8', body=content, request=request)
+
+
+class RandomDelayMiddleware(object):
+    def __init__(self, delay):
+        self.delay = delay
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        delay = crawler.spider.settings.get("RANDOM_DELAY", 10)
+        if not isinstance(delay, int):
+            raise ValueError("RANDOM_DELAY need a int")
+        return cls(delay)
+
+    def process_request(self, request, spider):
+        delay = random.randint(0, self.delay)
+        logging.debug("### random delay: %s s ###" % delay)
+        time.sleep(delay)

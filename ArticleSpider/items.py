@@ -73,15 +73,17 @@ class SohuItem(scrapy.Item):
     publish_time = scrapy.Field()
     content = scrapy.Field()
     crawl_time = scrapy.Field()
+    front_image_url = scrapy.Field()
 
     def get_insert_sql(self):
         insert_sql = """
-            insert into sohu_article(title, url, url_object_id, article_type, author_name, 
-             publish_time, content,crawl_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            insert into sohu_article(title, url, url_object_id, article_type, author_name,front_image_url, 
+             publish_time, content,crawl_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)
             ON DUPLICATE KEY UPDATE title=VALUES(title), author_name=VALUES(author_name)
         """
         params = (
             self["title"], self["url"], self["url_object_id"], self["article_type"], self["author_name"],
+            self["front_image_url"],
             self["publish_time"], self["content"], self["crawl_time"].strftime(SQL_DATETIME_FORMAT),
         )
 

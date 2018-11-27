@@ -58,6 +58,7 @@ DOWNLOADER_MIDDLEWARES = {
     # 'ArticleSpider.middlewares.RandomUserAgentMiddleware': 1,
     # 'ArticleSpider.middlewares.PhantomJSMiddleware': 2,
     'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
+    "ArticleSpider.middlewares.RandomDelayMiddleware": 999,
 }
 
 # Enable or disable extensions
