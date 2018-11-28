@@ -46,7 +46,7 @@ class SohuSpider(scrapy.Spider):
                     front_image_url = python_content['data']['news'][i]['images']
                     image_url_list = front_image_url.split(',')
                     if len(image_url_list) > 0:
-                        image_url = image_url_list[0].replace("[", "").replace("]", "")
+                        image_url = image_url_list[0].replace("[", "").replace("]", "").replace("\"", "")
                     else:
                         image_url = front_image_url
                 else:
