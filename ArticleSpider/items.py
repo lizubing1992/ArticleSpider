@@ -8,6 +8,7 @@
 import scrapy
 import datetime
 import re
+from bs4 import BeautifulSoup
 
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
@@ -57,6 +58,14 @@ def remove_comment_tags(value):
         return value
 
 
+def remove_header_footer(value):
+    soup = BeautifulSoup(value, "html5lib")
+    content_filter_header = soup.find_all("p")[3:]
+    content_filter_footer = soup.find_all("p")[3:-2]
+    out_str = "\r\n".join([str(i) for i in content_filter_footer])
+    return out_str
+
+
 def is_empty_show_default(value):
     if value.strip() == "":
         return "没有查到"
@@ -71,7 +80,9 @@ class SohuItem(scrapy.Item):
     article_type = scrapy.Field()
     author_name = scrapy.Field()
     publish_time = scrapy.Field()
-    content = scrapy.Field()
+    content = scrapy.Field(
+        input_processor=MapCompose(remove_header_footer)
+    )
     crawl_time = scrapy.Field()
     front_image_url = scrapy.Field()
 
