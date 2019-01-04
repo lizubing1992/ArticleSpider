@@ -24,7 +24,7 @@ class SohuSpider(scrapy.Spider):
     def start_requests(self):
         print('请求中……')
         for index in range(len(self.list)):
-            for i in range(1, 30):
+            for i in range(1, 5):
                 self.data["keyword"] = self.list[index]
                 self.data['from'] = str(i * 10)
                 yield scrapy.http.FormRequest(

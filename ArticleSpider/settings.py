@@ -112,10 +112,10 @@ AUTOTHROTTLE_ENABLED = True
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-MYSQL_HOST = "127.0.0.1"
+MYSQL_HOST = "47.107.124.213"
 MYSQL_DBNAME = "spider"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = 'root'
+MYSQL_PASSWORD = 'lzb5989148'
 
 SQL_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 SQL_DATE_FORMAT = "%Y-%m-%d"
