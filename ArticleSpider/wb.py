@@ -8,8 +8,8 @@ project_dir = os.path.abspath(os.path.dirname(__file__))
 card = os.path.join(project_dir, "card")
 # list = ["birthday.txt", "lantern.txt", "lover.txt", "new_year_eve.txt", "spring.txt"]
 # list_type = ["birthday", "lantern", "lover", "new_year_eve", "spring"]
-list = ["woman.txt"]
-list_type = ["woman"]
+list = ["aphorism .txt"]
+list_type = ["aphorism"]
 conn = MySQLdb.connect('127.0.0.1', 'root', 'root', 'spider', charset="utf8", use_unicode=True)
 cursor = conn.cursor()
 for index in range(len(list)):
